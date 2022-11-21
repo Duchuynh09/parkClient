@@ -8,18 +8,23 @@ const routes = [
   },
   {
     path: "/user/:id",
-    name:"user",
+    name: "user",
     component: home,
   },
   {
     path: "/:name/profile/:id",
-    name:"userRent",
-    component:() => import("@/views/user.vue"),
+    name: "userRent",
+    component: () => import("@/views/user.vue"),
   },
   {
-    path: "/:name/profile/edit/:id",
-    name:"editUser",
-    component:() => import("@/views/editUserProfile.vue"),
+    path: "/:areaId/:parkId/:name/profile/edit/:id",
+    name: "editUser",
+    component: () => import("@/views/editRentedUser.vue"),
+  },
+  {
+    path: "/:areaId/:parkId/:name/profile/add",
+    name: "addUser",
+    component: () => import("@/views/addRentedUser.vue"),
   },
   {
     path: "/register",

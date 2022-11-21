@@ -12,7 +12,7 @@
       </div>
       <div class="d-flex justify-content-end">
         <RouterLink v-if="this.$store.state.admin" :to="{ path: `/admin/profile/${localPark_id}` }"
-          class="btn btn-primary">Xem chi tiết ...</RouterLink>
+          class="btn btn-primary">{{localPark_id}} Xem chi tiết ...</RouterLink>
         <RouterLink v-else :to="{ path: `/user/profile/${localPark_id}` }" class="btn btn-primary">Xem chi tiết ...
         </RouterLink>
       </div>
@@ -35,9 +35,6 @@ export default {
     return { user:this.$store.state.user_rent};
   },
   emits:['oke'],
-  methods:{
-    
-  },
   components: { RouterLink },
   setup(props) {
     const time = new Date()

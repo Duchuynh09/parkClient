@@ -80,7 +80,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đợi xíu</button>
-                <button type="button" class="btn btn-primary" @click="unRent">Tính tiền</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="unRent">Tính tiền</button>
               </div>
             </div>
           </div>
@@ -119,9 +119,12 @@ export default {
     now.getTime()
     const totalTime = ((((now-time)/1000)/60)/60)
     // function
-
     async function unRent() {
       if(AreaId){
+
+      if(parkLocal.user.phone){
+        await new contactService("/api/user").delete(route.params.id)
+      }
       parkLocal.rented = false;
       parkLocal.user = {}
       await new contactService("/api").update(AreaId,parkLocal)

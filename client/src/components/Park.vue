@@ -34,18 +34,21 @@ export default {
     return { _user: this.$store.state.user };
   },
   methods: {
-    dialog() {
+    dialog(){
       if (this._user.name) {
+        // Đã đăng nhập
         if (!this.$store.state.admin) {
+          // Không là admin
           let t = new Date()
           this._user.time = t.getTime()
           if (confirm("Bạn có muốn đặt chổ này?")) {
             this.$emit("onRent", this._user, this.Park);
           }
         } else {
-          this.$router.push({ name: "editUser", params: { name: "admin" } });
+            this.$router.push({name: "addUser", params: { name: "admin",areaId:this.areaId,parkId:this.Park._id }})
         }
       } else {
+        // Chưa đăng nhâp;
         if (confirm("Bạn cần đăng nhập ngay")) {
           this.$router.push({ name: "login" });
         }
@@ -54,15 +57,12 @@ export default {
     onLick() {
       if (this.Park.rented) {
         if (this.$store.state.admin) {
-          this.$router.push({ name: "editUser", params: { name: "admin" } });
+          this.$router.push({ name: "editUser", params: { name: "admin" ,id:this.Park.user.id ,areaId:this.areaId,parkId:this.Park._id }});
         } else {
-          this.$router.push({ path: `/admin/profile/${this.Park.user.id}` });
+          // this.$router.push({ path: `/admin/profile/${this.Park.user.id}` });
         }
       } else { this.dialog() }
     },
-    unRent(){
-      console.log(this.$emits);
-    }
   },
   setup(props, context) {
     var cnt=[];
@@ -82,7 +82,6 @@ export default {
     });
     // tippy
     if (props.Park.rented) {
-      store.state.parkRent.push({areaId:props.areaId,park:props.Park})
       cnt = h(contact, {
         timeRent: `${props.Park.user.time}`,
         localPark_id: `${props.Park.user.id}`,
@@ -97,8 +96,6 @@ export default {
       zIndex: 999,
     });
     } 
-    
-
     // return
     return { btn, store, isDisabled, user };
   },
